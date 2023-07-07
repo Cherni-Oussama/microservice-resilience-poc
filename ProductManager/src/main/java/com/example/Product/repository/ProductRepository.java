@@ -1,0 +1,12 @@
+package com.example.Product.repository;
+
+import com.example.Product.entities.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, UUID> {
+
+}
