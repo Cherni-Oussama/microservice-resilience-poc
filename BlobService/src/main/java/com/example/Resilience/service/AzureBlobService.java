@@ -12,13 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -30,25 +33,27 @@ public class AzureBlobService {
 
     @Autowired
     public AzureBlobService(BlobServiceClient blobServiceClient) {
-        String containerName = "image-container-3";
+        String containerName = "images-container";
         this.createContainerIfNotExists(blobServiceClient, containerName);
         this.containerClient = blobServiceClient.getBlobContainerClient(containerName);
     }
 
     public UUID uploadImage(MultipartFile file){
+        var fileType = file.getContentType();
+        if(!Objects.equals(fileType,"image/png")){
+            throw new FileCouldNotBeSavedToBlobException("File is not of valid image type", null, null, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        }
         var blobId = UUID.randomUUID();
         log.info("Request to upload new Image to blob storage with Id {}", blobId);
         BlobClient blobClient = containerClient.getBlobClient(String.valueOf(blobId));
         BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders();
-        log.info(file.getOriginalFilename());
-        log.info(file.getName());
-        log.info(file.getContentType());
-        blobHttpHeaders.setContentType(file.getContentType());
+        blobHttpHeaders.setContentType(fileType);
+
         try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
             blobClient.uploadWithResponse(inputStream, file.getSize(), null, blobHttpHeaders, null, null, null, null, null );
         }
-        catch (Exception ce) {
-            log.error("Error While connecting to blob storage: " + Arrays.toString(ce.getStackTrace()));
+        catch (IOException ce) {
+            log.error("Error While Opening File: " + ce.getMessage());
             throw new FileCouldNotBeSavedToBlobException("Error uploading file to blob storage", null, null, HttpStatus.BAD_REQUEST);
         }
         return blobId;
