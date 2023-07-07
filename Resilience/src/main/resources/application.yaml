@@ -1,0 +1,60 @@
+server:
+  port: ${SERVER_PORT:1234}
+
+springdoc:
+  swagger-ui:
+    operationsSorter: method
+    tagsSorter: alpha
+
+spring:
+  application:
+    name: resilience-poc
+
+  cloud:
+    azure:
+      storage:
+        blob:
+          connectionString: ${CONNECTION_STRING:AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;}
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 3
+      minimumNumberOfCalls: 3
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10s
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      permittedNumberOfCallsInHalfOpenState: 2
+      recordExceptions:
+        - com.example.Resilience.exception.FileCouldNotBeSavedToBlobException
+        - java.net.ConnectException
+  instances:
+    backendImages:
+      baseConfig: default
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: "always"
+      probes:
+        enabled: true
+      status:
+        http-mapping:
+          DOWN: 200
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: health,info,prometheus,env,togglz,circuitBreakersToggle
+      base-path: /
+      path-mapping:
+        prometheus: prometheus
