@@ -24,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createNewProduct(ProductDto productDto) {
         return productRepository.save(Product.builder()
+                        .productId(UUID.randomUUID())
                         .productName(productDto.getProductName())
                         .productCategory(productDto.getProductCategory())
                         .productDescription(productDto.getProductDescription())

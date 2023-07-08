@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>BlobService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Resilience</name>
+	<name>BlobService</name>
 	<description>Demo project for Spring Boot with Resilience4j</description>
 	<properties>
 		<java.version>11</java.version>

@@ -6,3 +6,62 @@ springdoc:
     operationsSorter: method
     tagsSorter: alpha
 
+spring:
+  application:
+    name: ${APP_NAME:PRODUCT-MANAGEMENT}
+  datasource:
+    driver-class-name: ${PRODUCT_MANAGMENT_DB_DRIVER:org.postgresql.Driver}
+    host: ${DB_HOST:localhost}
+    port: ${DB_PORT:15431}
+    name: ${DB_NAME:postgres}
+    url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.name}
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      location: /var/myapp/uploads
+
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 3
+      minimumNumberOfCalls: 3
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10s
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      permittedNumberOfCallsInHalfOpenState: 2
+      recordExceptions:
+        - java.lang.Exception
+  instances:
+    backendImages:
+      baseConfig: default
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: "always"
+      probes:
+        enabled: true
+      status:
+        http-mapping:
+          DOWN: 200
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: health,info,prometheus,env,togglz,circuitBreakersToggle
+      base-path: /
+      path-mapping:
+        prometheus: prometheus
