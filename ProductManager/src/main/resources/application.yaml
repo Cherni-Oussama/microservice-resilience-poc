@@ -60,8 +60,8 @@ management:
   endpoints:
     enabled-by-default: true
     web:
+      base-path: /actuator
       exposure:
-        include: health,info,prometheus,env,togglz,circuitBreakersToggle
-      base-path: /
+        include: health,info,prometheus,env,togglz,circuitBreakersToggle,actuator
       path-mapping:
         prometheus: prometheus
