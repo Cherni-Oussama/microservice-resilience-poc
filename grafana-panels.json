@@ -399,8 +399,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "title": "CircuitBreaker",
@@ -465,8 +465,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "sparkline": {
@@ -549,8 +549,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "seriesOverrides": [],
@@ -658,8 +658,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "seriesOverrides": [],
@@ -761,8 +761,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "seriesOverrides": [],
@@ -882,8 +882,8 @@
       "scopedVars": {
         "circuitbreaker_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "seriesOverrides": [],
@@ -961,8 +961,8 @@
       "scopedVars": {
         "retry_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "title": "Retry",
@@ -1009,8 +1009,8 @@
       "scopedVars": {
         "retry_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "seriesOverrides": [],
@@ -1081,8 +1081,8 @@
       "scopedVars": {
         "bulkhead_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "title": "Bulkhead",
@@ -1124,8 +1124,8 @@
       "scopedVars": {
         "bulkhead_name": {
           "selected": true,
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         }
       },
       "seriesOverrides": [],
@@ -1262,8 +1262,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_circuitbreaker_state, name)",
@@ -1288,9 +1288,9 @@
         "allValue": null,
         "current": {
           "tags": [],
-          "text": "backendA",
+          "text": "backendImages",
           "value": [
-            "backendA"
+            "backendImages"
           ]
         },
         "datasource": "Prometheus",
@@ -1315,8 +1315,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "backendA",
-          "value": "backendA"
+          "text": "backendImages",
+          "value": "backendImages"
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_bulkhead_available_concurrent_calls, name)",

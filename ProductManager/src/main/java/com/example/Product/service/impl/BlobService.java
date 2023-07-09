@@ -1,7 +1,9 @@
 package com.example.Product.service.impl;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,18 +16,17 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class BlobService {
+
+    @Value("${blob-service.uri}")
+    private String blobServiceUri;
 
     private final RestTemplate restTemplate;
 
-    public BlobService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
     @CircuitBreaker(name = "backendImages")
     public UUID uploadImageToBlob(MultipartFile image) {
-        String url = "http://localhost:1234/images";
-
+        String url = String.format("http://%s/images",blobServiceUri);
         Resource imageResource = image.getResource();
 
         // Set the headers and content type
