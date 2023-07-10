@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,18 +32,14 @@ public class BlobService {
         String url = String.format("http://%s/images",blobServiceUri);
         Resource imageResource = image.getResource();
 
-        // Set the headers and content type
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        // Create the request body with the image file
         MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("image", imageResource); // Replace with the actual file path
+        requestBody.add("image", imageResource);
 
-        // Create the HTTP entity with headers and request body
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        // Make the HTTP POST request
         ResponseEntity<UUID> responseEntity = restTemplate.postForEntity(url, requestEntity, UUID.class);
         return responseEntity.getBody();
     }
