@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException.UnsupportedMediaType;
+import org.springframework.web.client.HttpServerErrorException.GatewayTimeout;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +30,16 @@ public class ControllerExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(body);
+    }
+
+    @ExceptionHandler(GatewayTimeout.class)
+    public ResponseEntity<ExceptionResponse> handleFileCouldNotBeSavedToBlobExceptionDueToTimeOut(GatewayTimeout exception) {
+        ExceptionResponse body = ExceptionResponse.builder()
+                .message(exception.getMessage())
+                .errorDescription("Blob Storage is facing timout while uploading image")
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(body);
     }
 
 }
