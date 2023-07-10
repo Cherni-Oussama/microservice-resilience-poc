@@ -1,6 +1,7 @@
 package com.example.Product.service.impl;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ public class BlobService {
 
     private final RestTemplate restTemplate;
 
+    @Retry(name = "backendImages")
     @CircuitBreaker(name = "backendImages")
     public UUID uploadImageToBlob(MultipartFile image) {
         String url = String.format("http://%s/images",blobServiceUri);

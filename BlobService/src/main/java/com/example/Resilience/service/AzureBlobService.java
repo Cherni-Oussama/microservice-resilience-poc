@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +19,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -42,6 +40,9 @@ public class AzureBlobService {
         var fileType = file.getContentType();
         if(!Objects.equals(fileType,"image/png")){
             throw new FileCouldNotBeSavedToBlobException("File is not of valid image type", null, null, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        }
+        if( file.getSize() > 500000L) {
+            throw new FileCouldNotBeSavedToBlobException("Timeout while uploading image", null, null, HttpStatus.GATEWAY_TIMEOUT);
         }
         var blobId = UUID.randomUUID();
         log.info("Request to upload new Image to blob storage with Id {}", blobId);
@@ -72,7 +73,6 @@ public class AzureBlobService {
         try{
             log.info("Creating blob container with name {}", containerName);
             blobServiceClient.createBlobContainer(containerName);
-            log.info("CREATED: container with name {}", containerName);
         } catch (BlobStorageException e){
             log.info("Container {} Already exists", containerName);
         }
