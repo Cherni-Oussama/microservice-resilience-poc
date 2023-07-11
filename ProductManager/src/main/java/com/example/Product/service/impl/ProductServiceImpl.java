@@ -5,6 +5,7 @@ import com.example.Product.entities.Product;
 import com.example.Product.exception.ResourceNotFoundException;
 import com.example.Product.repository.ProductRepository;
 import com.example.Product.service.ProductService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final BlobService blobService;
 
+    @RateLimiter(name = "backendImages")
     @Override
     public Product createNewProduct(ProductDto productDto) {
         return productRepository.save(Product.builder()
