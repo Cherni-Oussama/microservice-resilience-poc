@@ -28,6 +28,13 @@ public class BlobService {
 
     private final RestTemplate restTemplate;
 
+    /**
+     * Uploads an image file to a Blob storage using FileHandler service.
+     * Applies retry and circuit breaker policies for resilience.
+     *
+     * @param image The image file to upload.
+     * @return The UUID identifier of the uploaded image.
+     */
     @Retry(name = "backendImages")
     @CircuitBreaker(name = "backendImages")
     public UUID uploadImageToBlob(MultipartFile image) {

@@ -26,10 +26,10 @@ public class ProductController {
 
 
     /**
-     * Updates the image of a product with the specified product ID.
+     * Creates a new product based on the provided ProductDto.
      *
-     * @param productDto The ID of the product to update the image for.
-     * @return A ResponseEntity containing the updated Product object.
+     * @param productDto The ProductDto containing the information for the new product.
+     * @return A ResponseEntity containing the newly created Product object.
      */
     @PostMapping()
     public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto){
