@@ -1,15 +1,15 @@
 version: '3.9'
 services:
 
-  blob_service:
-    build: BlobService
-    container_name: image-uploader
+  file-handler:
+    build: FileHandler
+    container_name: file-handler
     ports:
       - "1234:1234"
     environment:
       - CONNECTION_STRING=AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://azurite:10000/devstoreaccount1
 
-  product_service:
+  product-service:
     build: ProductManager
     container_name: product-manager
     ports:
@@ -22,7 +22,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       DB_DRIVER: org.postgresql.Driver
-      BLOB_SERVICE: image-uploader:1234
+      BLOB_SERVICE: file-handler:1234
 
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
@@ -64,7 +64,7 @@ services:
       - ./grafana/:/var/lib/grafana
       - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/grafana-datasource.yml
       - ./grafana-panels.json:/etc/grafana/provisioning/dashboards/prometheus-dashboard.json
-      - ./test.yml:/etc/grafana/provisioning/dashboards/prometheus-dashboard-conf.yml
+      - ./auto-config-dashboard.yml:/etc/grafana/provisioning/dashboards/prometheus-dashboard-conf.yml
 
     environment:
       - GF_SECURITY_ADMIN_USER=admin
