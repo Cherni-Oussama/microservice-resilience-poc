@@ -31,6 +31,7 @@ public class BlobService {
     @Retry(name = "backendImages")
     @CircuitBreaker(name = "backendImages")
     public UUID uploadImageToBlob(MultipartFile image) {
+        log.info("Requesting FileHandler to save image with type {}", image.getContentType());
         String url = String.format("http://%s/images",blobServiceUri);
         Resource imageResource = image.getResource();
 

@@ -1,7 +1,7 @@
 package com.example.Product.service;
 
-import com.example.Product.DTOs.ProductDto;
-import com.example.Product.entities.Product;
+import com.example.Product.dto.ProductDto;
+import com.example.Product.entity.Product;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
