@@ -8,6 +8,8 @@ services:
       - "1234:1234"
     environment:
       - CONNECTION_STRING=AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://azurite:10000/devstoreaccount1
+    depends_on:
+      - azurite
 
   product-service:
     build: ProductManager
@@ -23,6 +25,9 @@ services:
       POSTGRES_PASSWORD: root
       DB_DRIVER: org.postgresql.Driver
       BLOB_SERVICE: file-handler:1234
+    depends_on:
+      - postgres_database
+
 
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
@@ -47,7 +52,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus:/etc/prometheus/
+      - ./Prometheus:/etc/prometheus/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
 
@@ -61,11 +66,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./grafana/:/var/lib/grafana
-      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/grafana-datasource.yml
-      - ./grafana-panels.json:/etc/grafana/provisioning/dashboards/prometheus-dashboard.json
-      - ./auto-config-dashboard.yml:/etc/grafana/provisioning/dashboards/prometheus-dashboard-conf.yml
-
+      - ./data:/var/lib/grafana
+      - ./Grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin

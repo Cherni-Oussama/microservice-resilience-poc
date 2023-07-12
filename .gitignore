@@ -1,7 +1,6 @@
 *.md
 target/
-grafana
-!.mvn/wrapper/maven-wrapper.jar
+!**/.mvn/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -36,3 +35,6 @@ build/
 */mvnw
 */mvnw.cmd
 */target
+*/.mvn
+/FileHandler/.mvn/
+/data
