@@ -29,6 +29,12 @@ public class AzureBlobService {
 
     private final BlobContainerClient containerClient;
 
+    /**
+     * Constructs an instance of AzureBlobService using the provided BlobServiceClient.
+     * Creates the container if it doesn't exist and sets the containerClient.
+     *
+     * @param blobServiceClient The BlobServiceClient for interacting with Azure Blob storage.
+     */
     @Autowired
     public AzureBlobService(BlobServiceClient blobServiceClient) {
         String containerName = "images-container";
@@ -36,6 +42,12 @@ public class AzureBlobService {
         this.containerClient = blobServiceClient.getBlobContainerClient(containerName);
     }
 
+    /**
+     * Uploads an image file to the blob storage.
+     *
+     * @param file The image file to upload.
+     * @return The UUID identifier of the uploaded image.
+     */
     public UUID uploadImage(MultipartFile file){
         var fileType = file.getContentType();
         if(!Objects.equals(fileType,"image/png")){
@@ -46,6 +58,7 @@ public class AzureBlobService {
         }
         var blobId = UUID.randomUUID();
         log.info("Request to upload new Image to blob storage with Id {}", blobId);
+
         BlobClient blobClient = containerClient.getBlobClient(String.valueOf(blobId));
         BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders();
         blobHttpHeaders.setContentType(fileType);

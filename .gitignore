@@ -1,4 +1,4 @@
-*.md
+**/HELP.md
 target/
 !**/.mvn/
 !**/src/main/**/target/
