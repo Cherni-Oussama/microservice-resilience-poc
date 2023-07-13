@@ -91,7 +91,7 @@
       "targets": [
         {
           "datasource": "Prometheus",
-          "expr": "sum(resilience4j_ratelimiter_available_permissions{name=\"backendImages\"})",
+          "expr": "sum(resilience4j_ratelimiter_available_permissions{name=\"productCreationRL\"})",
           "hide": false,
           "refId": "A"
         }
@@ -115,9 +115,9 @@
     },
     {
       "aliasColors": {
-        "backendImages: closed": "#0bbbef",
-        "backendImages: half_open": "#004f9a",
-        "backendImages: open": "#d7007f"
+        "fileHandlerCB: closed": "#0bbbef",
+        "fileHandlerCB: half_open": "#004f9a",
+        "fileHandlerCB: open": "#d7007f"
       },
       "bars": false,
       "dashLength": 10,
@@ -1064,10 +1064,10 @@
         "current": {
           "selected": true,
           "text": [
-            "backendImages"
+            "fileHandlerCB"
           ],
           "value": [
-            "backendImages"
+            "fileHandlerCB"
           ]
         },
         "datasource": {

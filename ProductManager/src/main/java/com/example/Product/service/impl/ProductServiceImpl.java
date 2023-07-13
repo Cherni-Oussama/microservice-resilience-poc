@@ -22,9 +22,9 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final BlobService blobService;
+    private final FileHandlerService fileHandlerService;
 
-    @RateLimiter(name = "backendImages")
+    @RateLimiter(name = "productCreationRL")
     @Override
     public Product createNewProduct(ProductDto productDto) {
         log.info("Request to create new product");
@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("Request to update Product image");
         var product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product Not Found", HttpStatus.NOT_FOUND));
-        product.setProductImageId(blobService.uploadImageToBlob(image));
+        product.setProductImageId(fileHandlerService.uploadImageToBlob(image));
         return product;
     }
 }
