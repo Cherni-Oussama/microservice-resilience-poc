@@ -21,7 +21,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class BlobService {
+public class FileHandlerService {
 
     @Value("${blob-service.uri}")
     private String blobServiceUri;
@@ -35,8 +35,8 @@ public class BlobService {
      * @param image The image file to upload.
      * @return The UUID identifier of the uploaded image.
      */
-    @Retry(name = "backendImages")
-    @CircuitBreaker(name = "backendImages")
+    @Retry(name = "fileHandlerRetry")
+    @CircuitBreaker(name = "fileHandlerCB")
     public UUID uploadImageToBlob(MultipartFile image) {
         log.info("Requesting FileHandler to save image with type {}", image.getContentType());
         String url = String.format("http://%s/images",blobServiceUri);
