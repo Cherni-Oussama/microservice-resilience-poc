@@ -5,7 +5,9 @@ import com.example.product.domain.model.Product;
 import com.example.product.domain.spi.ProductSpiPort;
 import com.example.product.infrastructure.mapper.ProductEntityMapper;
 import com.example.product.infrastructure.repository.ProductRepository;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,5 +38,29 @@ public class ProductAdapter implements ProductSpiPort {
             () -> new ResourceNotFoundException("Product Not Found", HttpStatus.NOT_FOUND));
     product.setProductImageId(fileHandlerService.uploadImageToBlob(image));
     return entityMapper.mapToDomain(product);
+  }
+
+  @Override
+  public Product fetchById(UUID productId) {
+    var product = productRepository
+        .findById(productId).orElseThrow(
+            () -> new ResourceNotFoundException("Product Not Found", HttpStatus.NOT_FOUND));
+    return entityMapper.mapToDomain(product);
+  }
+
+  @Override
+  public void deleteById(UUID productId) {
+    productRepository.findById(productId)
+        .ifPresentOrElse(productRepository::delete, () -> {
+          throw new ResourceNotFoundException("Product Not Found", HttpStatus.NOT_FOUND);
+        });
+  }
+
+  @Override
+  public List<Product> fetchAll() {
+    return productRepository.findAll()
+        .stream()
+        .map(entityMapper::mapToDomain)
+        .collect(Collectors.toList());
   }
 }

@@ -2,10 +2,13 @@ package com.example.product.application.rest;
 
 import com.example.product.application.rest.model.request.RestProductRequest;
 import com.example.product.application.rest.model.response.RestProductResponse;
+import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +36,14 @@ public interface ProductResourceAPI {
   @PostMapping(value = "{productId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<RestProductResponse> updateProductImage(@PathVariable("productId") UUID productId,
       @RequestBody MultipartFile image);
+
+  @GetMapping("{productId}")
+  ResponseEntity<RestProductResponse> fetchById(@PathVariable UUID productId);
+
+  @GetMapping("all")
+  ResponseEntity<List<RestProductResponse>> fetchAllProducts();
+
+  @DeleteMapping("{productId}")
+  ResponseEntity<Void> deleteProductById(@PathVariable UUID productId);
 
 }
