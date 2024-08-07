@@ -1,4 +1,4 @@
-package com.example.FileHandler.config;
+package com.example.filehandler.infrastructure.config;
 
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;

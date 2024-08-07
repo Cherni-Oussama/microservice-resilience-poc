@@ -1,4 +1,4 @@
-package com.example.FileHandler.exception;
+package com.example.filehandler.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

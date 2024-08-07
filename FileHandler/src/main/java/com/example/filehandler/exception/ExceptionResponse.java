@@ -1,4 +1,4 @@
-package com.example.FileHandler.exception;
+package com.example.filehandler.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

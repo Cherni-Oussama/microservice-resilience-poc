@@ -1,6 +1,6 @@
 version: '3.9'
-services:
 
+services:
   file-handler:
     build: FileHandler
     container_name: file-handler

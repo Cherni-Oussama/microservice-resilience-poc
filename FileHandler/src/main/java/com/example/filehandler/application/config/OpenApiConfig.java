@@ -1,4 +1,4 @@
-package com.example.FileHandler.config;
+package com.example.filehandler.application.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

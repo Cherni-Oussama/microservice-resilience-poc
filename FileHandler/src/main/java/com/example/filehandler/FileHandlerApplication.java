@@ -1,4 +1,4 @@
-package com.example.FileHandler;
+package com.example.filehandler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
